@@ -1,0 +1,35 @@
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:33:03"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:33:54"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:34:30"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:36:00"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:37:51"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:39:16"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:39:58"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:40:04"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:41:01"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:41:56"}
+{"level":"info","message":{"eventType":"click"},"timestamp":"2024-06-10 14:42:39"}
+{"level":"info","message":"OPTIONS /logger","timestamp":"2024-06-10 14:49:21"}
+{"level":"info","message":"GET /web","timestamp":"2024-06-10 14:53:44"}
+{"level":"info","message":"GET /web/","timestamp":"2024-06-10 14:53:44"}
+{"level":"info","message":"GET /static/js/main.4eaf260d.js","timestamp":"2024-06-10 14:53:44"}
+{"level":"info","message":"GET /static/css/main.7ae3401c.css","timestamp":"2024-06-10 14:53:44"}
+{"level":"info","message":"GET /manifest.json","timestamp":"2024-06-10 14:53:45"}
+{"level":"info","message":"GET /favicon.ico","timestamp":"2024-06-10 14:53:45"}
+{"level":"info","message":"GET /static/css/main.7ae3401c.css","timestamp":"2024-06-10 14:53:53"}
+{"level":"info","message":"GET /manifest.json","timestamp":"2024-06-10 14:53:53"}
+{"level":"info","message":"GET /","timestamp":"2024-06-10 14:57:36"}
+{"level":"info","message":"GET /static/js/main.4eaf260d.js","timestamp":"2024-06-10 14:57:37"}
+{"level":"info","message":"GET /static/css/main.7ae3401c.css","timestamp":"2024-06-10 14:57:37"}
+{"level":"info","message":"GET /static/css/main.7ae3401c.css.map","timestamp":"2024-06-10 14:57:37"}
+{"level":"info","message":"GET /static/media/hero.308317785705ca80cdca.png","timestamp":"2024-06-10 14:57:37"}
+{"level":"info","message":"GET /static/js/main.4eaf260d.js.map","timestamp":"2024-06-10 14:57:37"}
+{"level":"info","message":"GET /manifest.json","timestamp":"2024-06-10 14:57:38"}
+{"level":"info","message":"GET /logo192.png","timestamp":"2024-06-10 14:57:38"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:57:43"}
+{"level":"info","message":{"x-app-version":"0.1.0","x-component-name":"ClickSendButton","x-event-type":"click","x-page-url":"/"},"timestamp":"2024-06-10 14:57:43"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:57:49"}
+{"level":"info","message":{"x-app-version":"0.1.0","x-component-name":"ClickSendButton","x-event-type":"click","x-page-url":"/"},"timestamp":"2024-06-10 14:57:49"}
+{"level":"info","message":"POST /logger","timestamp":"2024-06-10 14:59:10"}
+{"level":"info","message":{"x-app-version":"0.1.0","x-component-name":"ClickSendButton","x-event-type":"click","x-page-url":"/"},"timestamp":"2024-06-10 14:59:10"}
+{"level":"info","message":{"host":"::1","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36","x-app-version":"0.1.0","x-component-name":"ClickSendButton","x-event-type":"click","x-page-url":"/"},"timestamp":"2024-06-10 15:02:19"}
