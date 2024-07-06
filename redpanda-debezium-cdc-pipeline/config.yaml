@@ -1,0 +1,82 @@
+http:
+  enabled: true
+  address: 0.0.0.0:4195
+  root_path: /benthos
+  debug_endpoints: false
+  cert_file: ""
+  key_file: ""
+  cors:
+    enabled: false
+    allowed_origins: []
+  basic_auth:
+    enabled: false
+    realm: restricted
+    username: ""
+    password_hash: ""
+    algorithm: sha256
+    salt: ""
+input:
+  stdin: {}
+buffer:
+  none: {}
+pipeline:
+  threads: -1
+  processors: []
+output:
+  label: "parseable-out"
+  http_client:
+    url: "http://localhost:8000/api/v1/logstream/cdc-pipeline" # Parseable URL
+    verb: POST
+    headers:
+      Authorization: "Basic YWRtaW46YWRtaW4="
+      Content-Type: "application/json"
+    rate_limit: "" # No default (optional)
+    timeout: 5s
+    max_in_flight: 64
+    batching:
+      count: 0
+      byte_size: 0
+      period: ""
+      check: ""
+input_resources: []
+processor_resources: []
+output_resources: []
+cache_resources: []
+rate_limit_resources: []
+logger:
+  level: INFO
+  format: logfmt
+  add_timestamp: false
+  level_name: level
+  timestamp_name: time
+  message_name: msg
+  static_fields:
+    '@service': benthos
+  file:
+    path: ""
+    rotate: false
+    rotate_max_age_days: 0
+metrics:
+  prometheus: {}
+  mapping: ""
+tracer:
+  none: {}
+shutdown_delay: 0s
+shutdown_timeout: 20s
+tests: []
+redpanda:
+  seed_brokers: []
+  logs_topic: __redpanda.connect.logs
+  logs_level: info
+  client_id: benthos
+  rack_id: ""
+  timeout: 10s
+  max_message_bytes: 1MB
+  tls:
+    enabled: false
+    skip_cert_verify: false
+    enable_renegotiation: false
+    root_cas: ""
+    root_cas_file: ""
+    client_certs: []
+  sasl: []
