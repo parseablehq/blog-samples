@@ -16,37 +16,54 @@ http:
     algorithm: sha256
     salt: ""
 input:
-  stdin: {}
+  label: "demo"
+  kafka_franz:
+    seed_brokers: [redpanda-0:9092] # No default (required)
+    topics: [dbserver1.inventory.customers] # No default (required)
+    consumer_group: ""
+    regexp_topics: false
+    auto_replay_nacks: true
+
 buffer:
   none: {}
+  
 pipeline:
-  threads: -1
-  processors: []
+  processors:
+    - mapping: |
+        root = {
+          "id": this.payload.after.id,
+          "first_name": this.payload.after.first_name,
+          "last_name": this.payload.after.last_name,
+          "email": this.payload.after.email,
+          "operation": this.payload.op,
+          "timestamp": this.payload.ts_ms,
+          "source": {
+            "connector": this.payload.source.connector,
+            "database": this.payload.source.db,
+            "schema": this.payload.source.schema,
+            "table": this.payload.source.table
+          }
+        }
+    - log:
+        message: "Processed message: ${! content() }"
+
 output:
-  label: "parseable-out"
   http_client:
-    url: "http://localhost:8000/api/v1/logstream/cdc-pipeline" # Parseable URL
+    url: http://host.docker.internal:8000/api/v1/logstream/cdcpipeline
     verb: POST
     headers:
+      Content-Type: application/json
       Authorization: "Basic YWRtaW46YWRtaW4="
-      Content-Type: "application/json"
-    rate_limit: "" # No default (optional)
-    timeout: 5s
-    max_in_flight: 64
-    batching:
-      count: 0
-      byte_size: 0
-      period: ""
-      check: ""
+      
 input_resources: []
 processor_resources: []
 output_resources: []
 cache_resources: []
 rate_limit_resources: []
 logger:
-  level: INFO
+  level: DEBUG
   format: logfmt
-  add_timestamp: false
+  add_timestamp: true
   level_name: level
   timestamp_name: time
   message_name: msg
@@ -80,3 +97,4 @@ redpanda:
     root_cas_file: ""
     client_certs: []
   sasl: []
+
