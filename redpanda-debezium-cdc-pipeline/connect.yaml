@@ -1,0 +1,100 @@
+http:
+  enabled: true
+  address: 0.0.0.0:4195
+  root_path: /benthos
+  debug_endpoints: false
+  cert_file: ""
+  key_file: ""
+  cors:
+    enabled: false
+    allowed_origins: []
+  basic_auth:
+    enabled: false
+    realm: restricted
+    username: ""
+    password_hash: ""
+    algorithm: sha256
+    salt: ""
+input:
+  label: "demo"
+  kafka_franz:
+    seed_brokers: [redpanda-0:9092] # No default (required)
+    topics: [dbserver1.inventory.customers] # No default (required)
+    consumer_group: ""
+    regexp_topics: false
+    auto_replay_nacks: true
+
+buffer:
+  none: {}
+  
+pipeline:
+  processors:
+    - mapping: |
+        root = {
+          "id": this.payload.after.id,
+          "first_name": this.payload.after.first_name,
+          "last_name": this.payload.after.last_name,
+          "email": this.payload.after.email,
+          "operation": this.payload.op,
+          "timestamp": this.payload.ts_ms,
+          "source": {
+            "connector": this.payload.source.connector,
+            "database": this.payload.source.db,
+            "schema": this.payload.source.schema,
+            "table": this.payload.source.table
+          }
+        }
+    - log:
+        message: "Processed message: ${! content() }"
+
+output:
+  http_client:
+    url: http://host.docker.internal:8000/api/v1/logstream/cdcpipeline
+    verb: POST
+    headers:
+      Content-Type: application/json
+      Authorization: "Basic YWRtaW46YWRtaW4="
+      
+input_resources: []
+processor_resources: []
+output_resources: []
+cache_resources: []
+rate_limit_resources: []
+logger:
+  level: DEBUG
+  format: logfmt
+  add_timestamp: true
+  level_name: level
+  timestamp_name: time
+  message_name: msg
+  static_fields:
+    '@service': benthos
+  file:
+    path: ""
+    rotate: false
+    rotate_max_age_days: 0
+metrics:
+  prometheus: {}
+  mapping: ""
+tracer:
+  none: {}
+shutdown_delay: 0s
+shutdown_timeout: 20s
+tests: []
+redpanda:
+  seed_brokers: []
+  logs_topic: __redpanda.connect.logs
+  logs_level: info
+  client_id: benthos
+  rack_id: ""
+  timeout: 10s
+  max_message_bytes: 1MB
+  tls:
+    enabled: false
+    skip_cert_verify: false
+    enable_renegotiation: false
+    root_cas: ""
+    root_cas_file: ""
+    client_certs: []
+  sasl: []
+
