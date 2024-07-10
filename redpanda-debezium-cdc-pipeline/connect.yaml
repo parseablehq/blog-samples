@@ -49,7 +49,7 @@ pipeline:
 
 output:
   http_client:
-    url: http://host.docker.internal:8000/api/v1/logstream/cdcpipeline
+    url: http://parseable:8000/api/v1/logstream/cdcpipeline
     verb: POST
     headers:
       Content-Type: application/json
