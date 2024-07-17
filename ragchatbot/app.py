@@ -21,7 +21,7 @@ PARSEABLE_URL = "https://demo.parseable.com/api/v1/logstream"
 PARSEABLE_STREAM = "ragbot"
 
 # OpenAI API key (replace with your actual key)
-os.environ["OPENAI_API_KEY"] = "sk-proj-XHGQTzi8jMDxzFllbFO2T3BlbkFJWazqHICsuXMUgGB0z29g"
+os.environ["OPENAI_API_KEY"] = "<open_ai_key>"
 
 # File to store chat history
 CHAT_HISTORY_FILE = "chat_history.pkl"
