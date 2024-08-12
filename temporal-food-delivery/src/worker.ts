@@ -4,11 +4,11 @@ import { ParseableTransport } from 'parseable-winston';
 import winston from 'winston';
 
 const parseable = new ParseableTransport({
-  url: "http://ec2-3-136-154-35.us-east-2.compute.amazonaws.com:443/api/v1/logstream",
-  username: "admin",
-  password: "admin",
+  url: 'http://localhost:8000/api/v1/logstream',
+  username: 'admin',
+  password: 'admin',
+  logstream: 'temporaltest',
   http2: false,
-  logstream: "temporalactivity",
 });
 
 const winstonLogger = winston.createLogger({
@@ -19,7 +19,7 @@ const winstonLogger = winston.createLogger({
 
 async function run() {
   Runtime.install({
-    logger: new DefaultLogger("DEBUG", (entry) => {
+    logger: new DefaultLogger('DEBUG', (entry) => {
       const { message, meta, level } = entry;
 
       if (meta?.sdkComponent === 'activity') {
@@ -34,7 +34,7 @@ async function run() {
           winstonLogger.info(message, meta);
         }
       }
-    })
+    }),
   });
 
   const worker = await Worker.create({

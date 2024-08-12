@@ -5,7 +5,7 @@ async function run() {
     connection: await Connection.connect(),
   });
 
-  const handle = client.schedule.getHandle('sample-schedule');
+  const handle = client.schedule.getHandle(process.argv[2]);
   await handle.delete();
 
   console.log(`Schedule is now deleted.`);
