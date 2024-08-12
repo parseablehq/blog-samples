@@ -4,8 +4,7 @@ async function run() {
   const client = new Client({
     connection: await Connection.connect(),
   });
-
-  const handle = client.schedule.getHandle('sample-schedule');
+  const handle = client.schedule.getHandle(process.argv[2]);
   await handle.pause();
 
   console.log(`Schedule is now paused.`);
