@@ -1,0 +1,29 @@
+{
+    "name": "mysql-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "tasks.max": "1",
+        "database.hostname": "mysql",
+        "database.port": "3306",
+        "database.user": "mysqluser",
+        "database.password": "mysqlpw",
+        "database.server.id": "12345",
+        "database.server.name": "kafkademo",
+        "database.history.kafka.bootstrap.servers": "broker:29092",
+        "database.history.kafka.topic": "kafkademo",
+        "database.include.list": "cdcdemo",
+        "table.include.list": "cdcdemo.customers, cdcdemo.orders, cdcdemo.customers_audit_log, cdcdemo.orders_audit_log",
+        "database.history.skip.unparseable.ddl": "true",
+        "include.schema.changes": "false",
+        "transforms": "unwrap",
+        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+        "transforms.unwrap.drop.tombstones": "false",
+        "topic.prefix": "kafkademo",
+        "decimal.handling.mode": "double",
+        "schema.history.internal.kafka.bootstrap.servers": "broker:29092",
+        "schema.history.internal.kafka.topic": "kafkademo",
+ "snapshot.mode": "initial",
+ "snapshot.locking.mode": "none"
+    }
+ }
+ 
