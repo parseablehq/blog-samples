@@ -1,0 +1,154 @@
+{
+    "name": "Audit Logs Dashboard",
+    "description": "",
+    "time_filter": null,
+    "refresh_interval": 60,
+    "tiles": [
+      {
+        "name": "Customers Updates vs Orders Updates",
+        "description": "",
+        "query": "SELECT 'Customer-Updates-Count' as 'Updates', count(*) as customer_updates_count from \"cdcdemo-customers-audit-log\" where payload_operation_type = 'UPDATE' UNION  select 'Orders-Updates-Count' as 'Updates', count(*) as orders_updates_count from \"cdcdemo-orders-audit-log\" where payload_operation_type = 'UPDATE' LIMIT 100",
+        "order": 1,
+        "visualization": {
+          "visualization_type": "donut-chart",
+          "circular_chart_config": {
+            "name_key": "Updates",
+            "value_key": "customer_updates_count"
+          },
+          "graph_config": null,
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Maximum Updates in Customers",
+        "description": "",
+        "query": "select count(*) as customer_updates, payload_id,payload_status from \"cdcdemo-customers\" group by payload_id,payload_status having customer_updates > 1 order by customer_updates desc LIMIT 100",
+        "order": 2,
+        "visualization": {
+          "visualization_type": "table",
+          "circular_chart_config": null,
+          "graph_config": null,
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Inserts vs Updates in Orders",
+        "description": "",
+        "query": "select count(payload_status) as status,payload_status from \"cdcdemo-orders\" group by payload_status LIMIT 100",
+        "order": 3,
+        "visualization": {
+          "visualization_type": "pie-chart",
+          "circular_chart_config": {
+            "name_key": "payload_status",
+            "value_key": "status"
+          },
+          "graph_config": null,
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Inserts vs Updates in Customers",
+        "description": "",
+        "query": "select count(payload_status) as status,payload_status from \"cdcdemo-customers\" group by payload_status having payload_status IS NOT NULL LIMIT 100",
+        "order": 4,
+        "visualization": {
+          "visualization_type": "pie-chart",
+          "circular_chart_config": {
+            "name_key": "payload_status",
+            "value_key": "status"
+          },
+          "graph_config": null,
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Maximum Updates in Orders",
+        "description": "",
+        "query": "select count(*) as order_updates, payload_id,payload_status from \"cdcdemo-orders\" group by payload_id,payload_status having order_updates > 1 order by order_updates desc LIMIT 100",
+        "order": 5,
+        "visualization": {
+          "visualization_type": "table",
+          "circular_chart_config": null,
+          "graph_config": null,
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Count of Deletes from Customers Table",
+        "description": "",
+        "query": "select count(*) as count_of_deletes from \"cdcdemo-customers-audit-log\" where payload_operation_type = 'DELETE' LIMIT 100",
+        "order": 6,
+        "visualization": {
+          "visualization_type": "table",
+          "circular_chart_config": null,
+          "graph_config": null,
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Count of Deletes from Orders table",
+        "description": "",
+        "query": "select count(*) as count_of_deletes from \"cdcdemo-orders-audit-log\" where payload_operation_type='DELETE' LIMIT 100",
+        "order": 7,
+        "visualization": {
+          "visualization_type": "table",
+          "circular_chart_config": null,
+          "graph_config": null,
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Order Deletes - Count and Total Amount",
+        "description": "",
+        "query": "select count(*) as orders_count, sum(payload_total_amount), payload_product_id from \"cdcdemo-orders\" orders inner join \"cdcdemo-orders-audit-log\" orders_audit_log on orders.payload_id = orders_audit_log.payload_primary_key_value and orders_audit_log.payload_operation_type = 'DELETE' group by orders.payload_product_id LIMIT 100",
+        "order": 8,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "payload_product_id",
+            "y_keys": [
+              "orders_count",
+              "sum(orders.payload_total_amount)"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Customer Deletes vs Order Deletes",
+        "description": "",
+        "query": "SELECT 'Customer-Deletes-Count' as 'Deletes', count(*) as customer_deletes_count from \"cdcdemo-customers-audit-log\" where payload_operation_type = 'DELETE' UNION  select 'Orders-Deletes-Count' as 'Deletes', count(*) as orders_deletes_count from \"cdcdemo-orders-audit-log\" where payload_operation_type = 'DELETE' LIMIT 100",
+        "order": 9,
+        "visualization": {
+          "visualization_type": "pie-chart",
+          "circular_chart_config": {
+            "name_key": "Deletes",
+            "value_key": "customer_deletes_count"
+          },
+          "graph_config": null,
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      }
+    ]
+  }

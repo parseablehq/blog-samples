@@ -1,0 +1,267 @@
+{
+    "name": "Ordering Dashboard",
+    "description": "",
+    "time_filter": null,
+    "refresh_interval": 60,
+    "tiles": [
+      {
+        "name": "Top Purchasers",
+        "description": "",
+        "query": "select customers.name, orders.total_ordered_amount from (select CONCAT(payload_first_name,' ',payload_last_name) name, payload_id as customer_id,p_timestamp from \"cdcdemo-customers\" order by p_timestamp desc) customers INNER JOIN (SELECT payload_purchaser_id, SUM(payload_total_amount) AS total_ordered_amount FROM \"cdcdemo-orders\" GROUP BY payload_purchaser_id) orders ON customers.customer_id = orders.payload_purchaser_id group by customers.name, customers.customer_id,orders.total_ordered_amount order by orders.total_ordered_amount desc LIMIT 20",
+        "order": 1,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "name",
+            "y_keys": [
+              "total_ordered_amount"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "lg",
+          "color_config": [
+            {
+              "field_name": "total_ordered_amount",
+              "color_palette": "cyan"
+            }
+          ],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Most number of orders",
+        "description": "",
+        "query": "select customers.name, orders.total_orders from (select CONCAT(payload_first_name,' ',payload_last_name) name, payload_id as customer_id,p_timestamp from \"cdcdemo-customers\" order by p_timestamp desc) customers INNER JOIN (SELECT payload_purchaser_id, COUNT(*) AS total_orders FROM \"cdcdemo-orders\" GROUP BY payload_purchaser_id ORDER BY  total_orders DESC LIMIT 10) orders ON customers.customer_id = orders.payload_purchaser_id group by customers.name, orders.total_orders order by orders.total_orders desc LIMIT 10",
+        "order": 2,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "name",
+            "y_keys": [
+              "total_orders"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [
+            {
+              "field_name": "total_orders",
+              "color_palette": "grape"
+            }
+          ],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Number of Orders Per Year",
+        "description": "",
+        "query": "WITH MonthlyOrders AS (     SELECT          SUBSTRING(payload_order_date, 1, 4) AS order_year,         SUBSTRING(payload_order_date, 6, 2) AS order_month,         COUNT(*) AS total_orders     FROM          \"cdcdemo-orders\"     GROUP BY          order_year, order_month ), RankedOrders AS (     SELECT          order_year,         order_month,         total_orders,         RANK() OVER (PARTITION BY order_year ORDER BY total_orders DESC) AS rank     FROM          MonthlyOrders ) SELECT      order_year,     order_month,     total_orders FROM      RankedOrders WHERE      rank <= 5 ORDER BY      order_year ASC, order_month ASC LIMIT 100",
+        "order": 3,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "order_year",
+            "y_keys": [
+              "order_month",
+              "total_orders"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [
+            {
+              "field_name": "order_year",
+              "color_palette": "grape"
+            },
+            {
+              "field_name": "order_month",
+              "color_palette": "cyan"
+            },
+            {
+              "field_name": "total_orders",
+              "color_palette": "indigo"
+            }
+          ],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Total Order Amounts per Year",
+        "description": "",
+        "query": "SELECT      SUBSTRING(payload_order_date, 1, 4) AS order_year,      SUM(payload_total_amount) AS total_order_amount FROM      \"cdcdemo-orders\" GROUP BY order_year ORDER BY      order_year ASC LIMIT 100",
+        "order": 4,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "order_year",
+            "y_keys": [
+              "total_order_amount"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [
+            {
+              "field_name": "total_order_amount",
+              "color_palette": "teal"
+            }
+          ],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Top 5 products with the highest sales",
+        "description": "",
+        "query": "SELECT      payload_product_id,      SUM(payload_quantity) AS total_quantity FROM      \"cdcdemo-orders\" GROUP BY      payload_product_id ORDER BY      total_quantity DESC LIMIT 5",
+        "order": 5,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "payload_product_id",
+            "y_keys": [
+              "total_quantity"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Monthly sales trend",
+        "description": "",
+        "query": "SELECT      SUBSTRING(payload_order_date, 1, 7) AS year_month,      SUM(payload_total_amount) AS monthly_sales FROM      \"cdcdemo-orders\"  GROUP BY      year_month having year_month < '2024-10' ORDER BY      year_month desc LIMIT 100",
+        "order": 6,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "year_month",
+            "y_keys": [
+              "monthly_sales"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [
+            {
+              "field_name": "monthly_sales",
+              "color_palette": "blue"
+            }
+          ],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Top products sales",
+        "description": "",
+        "query": "SELECT      payload_product_id,      COUNT(*) AS total_orders FROM      \"cdcdemo-orders\" GROUP BY      payload_product_id ORDER BY      total_orders desc  LIMIT 100",
+        "order": 7,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "payload_product_id",
+            "y_keys": [
+              "total_orders"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [
+            {
+              "field_name": "total_orders",
+              "color_palette": "cyan"
+            }
+          ],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "products by total revenue",
+        "description": "",
+        "query": "SELECT      payload_product_id,      SUM(payload_total_amount) AS total_revenue FROM      \"cdcdemo-orders\" GROUP BY      payload_product_id  LIMIT 100",
+        "order": 8,
+        "visualization": {
+          "visualization_type": "line-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "payload_product_id",
+            "y_keys": [
+              "total_revenue"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [
+            {
+              "field_name": "total_revenue",
+              "color_palette": "pink"
+            }
+          ],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Top 5 days with the highest sales",
+        "description": "",
+        "query": "SELECT      payload_order_date,      SUM(payload_total_amount) AS daily_sales FROM      \"cdcdemo-orders\" GROUP BY      payload_order_date ORDER BY      daily_sales DESC LIMIT 10",
+        "order": 9,
+        "visualization": {
+          "visualization_type": "area-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "payload_order_date",
+            "y_keys": [
+              "daily_sales"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "md",
+          "color_config": [
+            {
+              "field_name": "daily_sales",
+              "color_palette": "violet"
+            }
+          ],
+          "tick_config": []
+        }
+      },
+      {
+        "name": "Total revenue generated by each product",
+        "description": "",
+        "query": "SELECT      payload_product_id,      SUM(payload_total_amount) AS total_revenue FROM      \"cdcdemo-orders\" GROUP BY      payload_product_id ORDER BY      total_revenue DESC LIMIT 100",
+        "order": 10,
+        "visualization": {
+          "visualization_type": "bar-chart",
+          "circular_chart_config": null,
+          "graph_config": {
+            "x_key": "payload_product_id",
+            "y_keys": [
+              "total_revenue"
+            ],
+            "graph_type": null,
+            "orientation": null
+          },
+          "size": "sm",
+          "color_config": [],
+          "tick_config": []
+        }
+      }
+    ]
+  }

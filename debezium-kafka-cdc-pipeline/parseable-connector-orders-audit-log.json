@@ -1,0 +1,26 @@
+{
+    "name": "parseable-sink-orders-audit-log",
+    "config": {
+        "topics": "kafkademo.cdcdemo.orders_audit_log",
+        "tasks.max": "1",
+        "connector.class": "io.confluent.connect.http.HttpSinkConnector",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "key.converter.schemas.enable": "false",
+        "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter.schemas.enable": "false",
+        "reporter.bootstrap.servers": "broker:29092",
+        "reporter.result.topic.name": "success-responses",
+        "reporter.result.topic.replication.factor": "1",
+        "reporter.error.topic.name": "error-responses",
+        "reporter.error.topic.replication.factor": "1",
+        "confluent.topic.bootstrap.servers": "broker:29092",
+        "confluent.topic.replication.factor": "1",
+        "http.api.url": "http://parseable:8000/api/v1/ingest",
+        "request.method": "POST",
+        "headers":"X-P-Stream:cdcdemo-orders-audit-log",
+        "auth.type": "BASIC",
+        "connection.user": "admin",
+        "connection.password": "admin"
+    }
+ }
+ 
