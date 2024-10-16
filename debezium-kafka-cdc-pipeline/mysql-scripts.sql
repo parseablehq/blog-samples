@@ -2,13 +2,13 @@ CREATE DATABASE cdcdemo;
 USE cdcdemo;
 CREATE TABLE customers ( id SERIAL PRIMARY KEY, first_name VARCHAR(100) NOT NULL, last_name VARCHAR(100) NOT NULL, email VARCHAR(255) NOT NULL, status VARCHAR(10)  );
 
-CREATE TABLE orders ( id SERIAL PRIMARY KEY, order_date DATE NOT NULL, purchaser_id BIGINT UNSIGNED, product_id VARCHAR(10) NOT NULL, 
+CREATE TABLE orders ( id SERIAL PRIMARY KEY, order_date VARCHAR(10) NOT NULL, purchaser_id BIGINT UNSIGNED, product_id VARCHAR(10) NOT NULL, 
 quantity INT NOT NULL,amount DECIMAL(10,2) NOT NULL, total_amount DECIMAL(10, 2) NOT NULL, status VARCHAR(10),  
 FOREIGN KEY (purchaser_id) REFERENCES customers(id) ON DELETE CASCADE );
 
-CREATE table customers_audit_log ( id SERIAL PRIMARY KEY, table_name VARCHAR(100) NOT NULL, operation_type VARCHAR(10) NOT NULL, primary_key_value BIGINT NOT NULL, old_values JSON, new_values JSON, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
+CREATE table customers_audit_log ( id SERIAL PRIMARY KEY, table_name VARCHAR(100) NOT NULL, operation_type VARCHAR(10) NOT NULL, primary_key_value VARCHAR(10) NOT NULL, old_values JSON, new_values JSON, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
 
-CREATE table orders_audit_log ( id SERIAL PRIMARY KEY, table_name VARCHAR(100) NOT NULL, operation_type VARCHAR(10) NOT NULL, primary_key_value BIGINT NOT NULL, old_values JSON, new_values JSON, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
+CREATE table orders_audit_log ( id SERIAL PRIMARY KEY, table_name VARCHAR(100) NOT NULL, operation_type VARCHAR(10) NOT NULL, primary_key_value VARCHAR(10) NOT NULL, old_values JSON, new_values JSON, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
 
 DELIMITER //
 

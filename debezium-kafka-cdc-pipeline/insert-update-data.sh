@@ -26,7 +26,24 @@ generate_random_date() {
   RANDOM_SECONDS=$(( (RANDOM << 15) | RANDOM ))
 
   # Ensure that the random seconds fall within the range of dates
+  RANDOM_DATE_SECONDS=$((START_DATE + RANDOM_SECONDS % (END_DATE - START_DATE + 1)))
 
+  # Convert the random seconds back to a date
+  RANDOM_DATE=$(date -d @$RANDOM_DATE_SECONDS +%F)
+}
+export MYSQL_PWD='debezium'
+
+# Run an infinite loop
+while true; do
+  # Generate random names and emails
+  generate_random_name
+  RANDOM_FIRST_NAME=$FIRST_NAME
+  RANDOM_LAST_NAME=$LAST_NAME
+  RANDOM_EMAIL=$EMAIL
+
+  # Insert new random customer entries
+  mysql -u root -e "
+  INSERT INTO cdcdemo.customers(first_name, last_name, email, status) VALUES ('$RANDOM_FIRST_NAME', '$RANDOM_LAST_NAME', '$RANDOM_EMAIL', 'INSERT');
   "
 
   echo "Inserted new random customer into the customers table."
