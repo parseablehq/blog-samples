@@ -1,0 +1,25 @@
+{
+    "name": "ybconnector4",
+    "config": {
+      "tasks.max":"1",
+      "connector.class": "io.debezium.connector.yugabytedb.YugabyteDBConnector",
+      "database.hostname":"192.168.224.2",
+      "database.master.addresses":"192.168.224.2:7100",
+      "database.port":"5433",
+      "database.user": "yugabyte",
+      "database.password":"yugabyte",
+      "database.dbname":"yugabyte",
+      "database.server.name":"ybconnector4",
+      "snapshot.mode":"initial",
+      "database.streamid":"9c4f0b8c625e1b989e40ae8ddf3c8a8e",
+      "table.include.list":"public.reviews",
+     "value.converter": "org.apache.kafka.connect.json.JsonConverter", "value.converter.schemas.enable": "false",
+      "new.table.poll.interval.ms":"5000",
+  "schema.history.internal.kafka.bootstrap.servers": "broker:29092",
+         "schema.history.internal.kafka.topic": "kafkademo",
+  "transforms": "unwrap",
+         "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+         "transforms.unwrap.drop.tombstones": "false"
+    }
+  }
+  
