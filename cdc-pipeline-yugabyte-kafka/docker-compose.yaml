@@ -104,8 +104,6 @@ services:
           mv debezium-connector-yugabytedb-1.9.5.y.220.4.jar /usr/share/java
           echo "Installing connector plugins"
           confluent-hub install --no-prompt confluentinc/kafka-connect-http:1.7.4
-          confluent-hub install --no-prompt debezium/debezium-connector-mysql:latest
-          confluent-hub install --no-prompt debezium/debezium-connector-postgresql:latest
 
           #
           echo "Launching Kafka Connect worker"
