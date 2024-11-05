@@ -1,0 +1,100 @@
+{
+  "name": "Test",
+  "description": "",
+  "time_filter": null,
+  "refresh_interval": 60,
+  "tiles": [
+    {
+      "name": "Large files",
+      "description": "",
+      "query": "Select api_object, api_rx  from minio_audit where api_rx > 20000 order by api_rx desc LIMIT 10",
+      "order": 1,
+      "visualization": {
+        "visualization_type": "bar-chart",
+        "circular_chart_config": null,
+        "graph_config": {
+          "x_key": "api_object",
+          "y_keys": [
+            "api_rx"
+          ],
+          "graph_type": null,
+          "orientation": null
+        },
+        "size": "md",
+        "color_config": [
+          {
+            "field_name": "api_rx",
+            "color_palette": "green"
+          }
+        ],
+        "tick_config": []
+      }
+    },
+    {
+      "name": "Operation count",
+      "description": "",
+      "query": "select count(*) as count,api_name from minio_audit group by api_name LIMIT 100",
+      "order": 2,
+      "visualization": {
+        "visualization_type": "area-chart",
+        "circular_chart_config": null,
+        "graph_config": {
+          "x_key": "api_name",
+          "y_keys": [
+            "count"
+          ],
+          "graph_type": null,
+          "orientation": null
+        },
+        "size": "md",
+        "color_config": [
+          {
+            "field_name": "count",
+            "color_palette": "indigo"
+          }
+        ],
+        "tick_config": []
+      }
+    },
+    {
+      "name": "Data transferred",
+      "description": "",
+      "query": "select sum(api_rx) as sum,api_name from minio_audit group by api_name LIMIT 100",
+      "order": 3,
+      "visualization": {
+        "visualization_type": "line-chart",
+        "circular_chart_config": null,
+        "graph_config": {
+          "x_key": "api_name",
+          "y_keys": [
+            "sum"
+          ],
+          "graph_type": null,
+          "orientation": null
+        },
+        "size": "md",
+        "color_config": [
+          {
+            "field_name": "sum",
+            "color_palette": "indigo"
+          }
+        ],
+        "tick_config": []
+      }
+    },
+    {
+      "name": "Bucket activity",
+      "description": "",
+      "query": "select count(*) as count,api_bucket,api_name from minio_audit group by api_bucket,api_name LIMIT 100",
+      "order": 4,
+      "visualization": {
+        "visualization_type": "table",
+        "circular_chart_config": null,
+        "graph_config": null,
+        "size": "md",
+        "color_config": [],
+        "tick_config": []
+      }
+    }
+  ]
+}

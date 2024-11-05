@@ -1,0 +1,14 @@
+{
+  "name": "Bucket activity",
+  "description": "",
+  "query": "select count(*) as count,api_bucket,api_name from minio_audit group by api_bucket,api_name LIMIT 100",
+  "order": 3,
+  "visualization": {
+    "visualization_type": "table",
+    "circular_chart_config": null,
+    "graph_config": null,
+    "size": "md",
+    "color_config": [],
+    "tick_config": []
+  }
+}

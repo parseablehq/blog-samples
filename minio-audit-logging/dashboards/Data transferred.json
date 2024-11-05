@@ -1,0 +1,26 @@
+{
+  "name": "Data transferred",
+  "description": "",
+  "query": "select sum(api_rx) as sum,api_name from minio_audit group by api_name LIMIT 100",
+  "order": 4,
+  "visualization": {
+    "visualization_type": "line-chart",
+    "circular_chart_config": null,
+    "graph_config": {
+      "x_key": "api_name",
+      "y_keys": [
+        "sum"
+      ],
+      "graph_type": null,
+      "orientation": null
+    },
+    "size": "md",
+    "color_config": [
+      {
+        "field_name": "sum",
+        "color_palette": "indigo"
+      }
+    ],
+    "tick_config": []
+  }
+}

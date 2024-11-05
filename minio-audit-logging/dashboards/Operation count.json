@@ -1,0 +1,26 @@
+{
+  "name": "Operation count",
+  "description": "",
+  "query": "select count(*) as count,api_name from minio_audit group by api_name LIMIT 100",
+  "order": 2,
+  "visualization": {
+    "visualization_type": "area-chart",
+    "circular_chart_config": null,
+    "graph_config": {
+      "x_key": "api_name",
+      "y_keys": [
+        "count"
+      ],
+      "graph_type": null,
+      "orientation": null
+    },
+    "size": "md",
+    "color_config": [
+      {
+        "field_name": "count",
+        "color_palette": "indigo"
+      }
+    ],
+    "tick_config": []
+  }
+}
